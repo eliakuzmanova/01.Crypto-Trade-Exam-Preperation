@@ -20,5 +20,6 @@ router.get("/logout", authController.getLogout);
 
 
 router.get("/create", cryptoController.getCreateView);
+router.post("/create", cryptoController.postCreate)
 
 module.exports = router

@@ -4,7 +4,7 @@ const authService = require("../services/authService")
 const getErrorMessage = require("../utils/errorUtils")
 
 const errorResponse = (res, template, erorr,status = 404) => {
-    return res.status(status).render(template, erorr)
+    return res.status(status).render(template, getErrorMessage(erorr))
 }
 
 exports.getRegisterView = (req, res) => {
@@ -71,3 +71,5 @@ exports.getLogout = (req, res) => {
     res.clearCookie("auth")
     res.redirect("/")
 }
+
+module.export = errorResponse;

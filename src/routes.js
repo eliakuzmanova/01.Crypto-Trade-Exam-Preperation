@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const homeController = require("../controllers/homeController")
 const authController = require("../controllers/authController")
+const cryptoController = require("../controllers/cryptoController")
 const {authMiddleware} = require("../middlewares/authMiddleware")
 
 //add middleware to the needed routes <<<<-----------------------
@@ -16,5 +17,8 @@ router.get("/login", authController.getLoginView);
 router.post("/login", authController.postLogin);
 
 router.get("/logout", authController.getLogout);
+
+
+router.get("/create", cryptoController.getCreateView);
 
 module.exports = router

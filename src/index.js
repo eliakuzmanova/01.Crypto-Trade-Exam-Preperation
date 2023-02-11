@@ -28,4 +28,4 @@ app.use(router)
 mongoose.set({"strictQuery": false})
 mongoose.connect("mongodb://localhost:27017/crypto")
 
-app.listen(5080, console.log("Server is listeting on port 5080..."))
+app.listen(3000, console.log("Server is listeting on port 3000..."))

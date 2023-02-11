@@ -42,7 +42,6 @@ exports.postCreate = async (req, res) => {
 exports.getCatalogView = async (req, res) => {
     try {
         const cryptos = await cryptoService.getAllCrypto()
-        console.log(cryptos);
         res.render("crypto/catalog", {cryptos})
     } catch(err) {
         errorUtils.errorResponse(res, "crypto/catalog", err, 404)

@@ -1,11 +1,7 @@
 
 const validator = require('validator')
 const authService = require("../services/authService")
-const getErrorMessage = require("../utils/errorUtils")
-
-const errorResponse = (res, template, erorr,status = 404) => {
-    return res.status(status).render(template, getErrorMessage(erorr))
-}
+const errorUtils = require("../utils/errorUtils")
 
 exports.getRegisterView = (req, res) => {
     res.render("auth/register")
@@ -13,7 +9,6 @@ exports.getRegisterView = (req, res) => {
 
 exports.postRegister = async (req, res) => {
     const { username, email, password, repeatPassword } = req.body
-
 
     try {
         if(!username) {
@@ -44,7 +39,7 @@ exports.postRegister = async (req, res) => {
         res.cookie("auth", token)
         res.redirect("/")
     } catch (err) {
-       errorResponse(res, "auth/register", err, 404);
+        errorUtils.errorResponse(res, "auth/register", err, 404);
     };
 
 
@@ -56,13 +51,13 @@ exports.getLoginView = (req, res) => {
 
 exports.postLogin = async (req, res) => {
     const { email, password } = req.body
-    //TODO ERORR HANDLIN
+
     try {
         const token = await authService.login(req, res, email, password)
         res.cookie("auth", token)
         res.redirect("/")
     } catch (err) {
-        errorResponse(res, "auth/login", err, 404);;
+        errorUtils.errorResponse(res, "auth/login", err, 404);;
     }
 }
 
@@ -71,5 +66,3 @@ exports.getLogout = (req, res) => {
     res.clearCookie("auth")
     res.redirect("/")
 }
-
-module.export = errorResponse;

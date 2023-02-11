@@ -1,4 +1,7 @@
 const Crypto = require("../models/Crypto");
 
-exports.createCrypto = (name, imageUrl, price, description, payment) => Crypto.create({name, imageUrl, price, description, payment});
+exports.createCrypto = (name, imageUrl, price, description, payment,owner) => Crypto.create({name, imageUrl, price, description, payment,owner: owner});
 
+exports.getAllCrypto = () => Crypto.find();
+
+// export.getOneCrypto = () => Crypto.find()

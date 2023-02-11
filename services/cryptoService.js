@@ -4,4 +4,4 @@ exports.createCrypto = (name, imageUrl, price, description, payment,owner) => Cr
 
 exports.getAllCrypto = () => Crypto.find().lean();
 
-// export.getOneCrypto = () => Crypto.find()
+exports.getOneCrypto = (cryptoId) => Crypto.findById({_id: cryptoId}).lean();

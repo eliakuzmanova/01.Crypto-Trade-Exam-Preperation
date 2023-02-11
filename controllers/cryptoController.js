@@ -47,3 +47,35 @@ exports.getCatalogView = async (req, res) => {
         errorUtils.errorResponse(res, "crypto/catalog", err, 404)
     }
 }
+
+exports.getDetailsView = async (req, res) => {
+    
+    try{
+        const cryptoId = req.params.cryptoId
+        const crypto = await cryptoService.getOneCrypto(cryptoId)
+
+        let data;
+    if (req.user) {
+        const isAuth = req.user.userId
+   
+        const isOwner = crypto.owner == req.user.userId && isAuth
+
+        const isUser = crypto.users.includes(req.user.userId) && isAuth && !isOwner
+
+        
+        data = {crypto, isLoggedIn, isUser, isOwner}
+    } else {
+        const noUser = true
+        data = {crypto, noUser} 
+        
+    }
+        res.render("crypto/details", data)
+   
+
+    
+    } catch(err) {
+        console.log(err);
+        res.status(404).redirect("/404")
+    }
+    
+}

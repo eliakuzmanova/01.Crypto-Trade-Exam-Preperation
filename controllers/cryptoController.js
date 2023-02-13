@@ -133,3 +133,14 @@ exports.postEdit = async (req, res) => {
     }
 
 }
+
+exports.getDelete = async (req, res) => {
+
+    try {
+        const cryptoId = req.params.cryptoId
+        await cryptoService.deleteCrypto(cryptoId)
+        res.redirect("/catalog")
+    } catch (err) {
+        errorUtils.errorResponse(res, "404", err, 404)
+    }
+}

@@ -28,4 +28,6 @@ router.get("/details/:cryptoId",cryptoController.getDetailsView)
 router.get("/edit/:cryptoId",cryptoController.getEditView)
 router.post("/edit/:cryptoId",cryptoController.postEdit)
 
+router.get("/delete/:cryptoId",cryptoController.getDelete)
+
 module.exports = router

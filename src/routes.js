@@ -25,4 +25,7 @@ router.get("/catalog", cryptoController.getCatalogView);
 
 router.get("/details/:cryptoId",cryptoController.getDetailsView)
 
+router.get("/edit/:cryptoId",cryptoController.getEditView)
+router.post("/edit/:cryptoId",cryptoController.postEdit)
+
 module.exports = router

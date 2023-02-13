@@ -24,7 +24,7 @@ exports.postRegister = async (req, res) => {
         if(!repeatPassword) {
             throw Error("Confirm password is required")
         }
-        const validPass = validator.isStrongPassword(password)
+        const validPass = validator.isStrongPassword(password,{minLength: 4})
         if (!validPass) {
             throw Error("Not enough strong password")
         }

@@ -32,4 +32,6 @@ router.get("/delete/:cryptoId",cryptoController.getDelete)
 
 router.get("/buy/:cryptoId",isAuth,cryptoController.getBuy)
 
+router.get("/search", cryptoController.getSearchView)
+
 module.exports = router

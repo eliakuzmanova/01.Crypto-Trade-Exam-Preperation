@@ -39,7 +39,7 @@ exports.postRegister = async (req, res) => {
         res.cookie("auth", token)
         res.redirect("/")
     } catch (err) {
-        errorUtils.errorResponse(res, "auth/register", err, 404);
+        return errorUtils.errorResponse(res, "auth/register", err, 404);
     };
 
 
@@ -57,7 +57,7 @@ exports.postLogin = async (req, res) => {
         res.cookie("auth", token)
         res.redirect("/")
     } catch (err) {
-        errorUtils.errorResponse(res, "auth/login", err, 404);;
+        return errorUtils.errorResponse(res, "auth/login", err, 404);;
     }
 }
 

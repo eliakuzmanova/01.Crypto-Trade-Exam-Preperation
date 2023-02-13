@@ -33,19 +33,19 @@ exports.postCreate = async (req, res) => {
         }
 
         await cryptoService.createCrypto(name, imageUrl, price, description, payment, req.user.userId)
+        res.redirect("/catalog")
 
     } catch (err) {
-        errorUtils.errorResponse(res, "crypto/create", err, 404)
+      return errorUtils.errorResponse(res, "crypto/create", err, 404)
     }
-    res.redirect("/catalog")
+    
 }
-
 exports.getCatalogView = async (req, res) => {
     try {
         const cryptos = await cryptoService.getAllCrypto()
         res.render("crypto/catalog", { cryptos })
     } catch (err) {
-        errorUtils.errorResponse(res, "crypto/catalog", err, 404)
+        return  errorUtils.errorResponse(res, "crypto/catalog", err, 404)
     }
 }
 
@@ -76,8 +76,7 @@ exports.getDetailsView = async (req, res) => {
 
 
     } catch (err) {
-        console.log(err);
-        res.status(404).redirect("/404")
+        return errorUtils.errorResponse(res, "home/404", err, 404)
     }
 
 }
@@ -90,9 +89,9 @@ exports.getEditView = async (req, res) => {
         const crypto = await cryptoService.getOneCrypto(cryptoId)
         const payments = paymentUtil.generatePayment(crypto.payment)
 
-        res.render("crypto/edit", { crypto, payments })
+        res.render("crypto/edit", { crypto, payments})
     } catch (err) {
-        errorUtils.errorResponse(res, "home/404", err, 404)
+        return errorUtils.errorResponse(res, "home/404", err, 404)
     }
 
 
@@ -129,7 +128,8 @@ exports.postEdit = async (req, res) => {
 
         res.redirect(`/details/${cryptoId}`)
     } catch (err) {
-        errorUtils.errorResponse(res, "crypto/edit", err, 404)
+      
+        return errorUtils.errorResponse(res, `home/404`, err, 404)
     }
 
 }
@@ -141,7 +141,7 @@ exports.getDelete = async (req, res) => {
         await cryptoService.deleteCrypto(cryptoId)
         res.redirect("/catalog")
     } catch (err) {
-        errorUtils.errorResponse(res, "home/404", err, 404)
+        return errorUtils.errorResponse(res, "home/404", err, 404)
     }
 }
 
@@ -160,7 +160,17 @@ exports.getBuy = async (req, res) => {
 
         res.redirect(`/details/${cryptoId}`)
     } catch (err) {
-        errorUtils.errorResponse(res, "home/404", err, 404)
+        return errorUtils.errorResponse(res, "home/404", err, 404)
     }
 
+}
+
+exports.getSearchView = async (req, res) => {
+
+    try {
+        const cryptos = await cryptoService.getAllCrypto();
+        res.render("crypto/search", {cryptos})
+    } catch (err) {
+        return  errorUtils.errorResponse(res, "crypto/search", err, 404)
+    }
 }

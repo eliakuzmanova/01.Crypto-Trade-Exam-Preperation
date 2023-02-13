@@ -17,5 +17,6 @@ const getErrorMessage = (err) => {
  }
 
 exports.errorResponse = (res, template, error,status = 404) => {
+    console.log(error);
     return res.status(status).render(template, {errors: getErrorMessage(error)})
 }

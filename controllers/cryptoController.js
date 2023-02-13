@@ -60,8 +60,8 @@ exports.getDetailsView = async (req, res) => {
             const isAuth = req.user.userId
 
             const isOwner = crypto.owner == req.user.userId && isAuth
-
-            const isUser = crypto.users.includes(req.user.userId) && isAuth && !isOwner
+        
+            const isUser = await cryptoService.findIsUser(isAuth, cryptoId)
 
             const isLoggedIn = isAuth && !isOwner && !isUser
 
@@ -92,7 +92,7 @@ exports.getEditView = async (req, res) => {
 
         res.render("crypto/edit", { crypto, payments })
     } catch (err) {
-        errorUtils.errorResponse(res, "404", err, 404)
+        errorUtils.errorResponse(res, "home/404", err, 404)
     }
 
 
@@ -141,6 +141,26 @@ exports.getDelete = async (req, res) => {
         await cryptoService.deleteCrypto(cryptoId)
         res.redirect("/catalog")
     } catch (err) {
-        errorUtils.errorResponse(res, "404", err, 404)
+        errorUtils.errorResponse(res, "home/404", err, 404)
     }
+}
+
+exports.getBuy = async (req, res) => {
+
+    try {
+        const user = req.user.userId
+     
+        const cryptoId = req.params.cryptoId
+      const crypto = await cryptoService.getOneCrypto(cryptoId)
+      
+      crypto.users.push(user)
+     
+  
+      await cryptoService.addUser(crypto.users, cryptoId)
+
+        res.redirect(`/details/${cryptoId}`)
+    } catch (err) {
+        errorUtils.errorResponse(res, "home/404", err, 404)
+    }
+
 }

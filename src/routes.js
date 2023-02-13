@@ -30,4 +30,6 @@ router.post("/edit/:cryptoId",cryptoController.postEdit)
 
 router.get("/delete/:cryptoId",cryptoController.getDelete)
 
+router.get("/buy/:cryptoId",isAuth,cryptoController.getBuy)
+
 module.exports = router
